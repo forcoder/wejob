@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeJob 设计系统预览</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* 色彩系统 - Professional Smart */
+      --primary: #0F172A;
+      --primary-light: #1E293B;
+      --accent: #3B82F6;
+      --accent-light: #60A5FA;
+      --accent-warm: #F59E0B;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --error: #EF4444;
+      --bg: #FAFBFC;
+      --surface: #FFFFFF;
+      --text: #0F172A;
+      --text-secondary: #64748B;
+      --text-muted: #94A3B8;
+      --border: #E2E8F0;
+      --border-light: #F1F5F9;
+
+      /* 间距 */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+
+      /* 圆角 */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+
+      /* 阴影 */
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ========== 布局 ========== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* ========== 头部 ========== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .nav {
+      display: flex;
+      gap: var(--space-1);
+    }
+
+    .nav-item {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .nav-item:hover {
+      color: var(--text);
+      background: var(--border-light);
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+      background: var(--border-light);
+    }
+
+    /* ========== Hero ========== */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--primary);
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 100px;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-title {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--primary);
+      margin-bottom: var(--space-5);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title .highlight {
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto var(--space-8);
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+    }
+
+    /* ========== 按钮 ========== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-6);
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.15s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-light);
+    }
+
+    /* ========== 功能卡片 ========== */
+    .features {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .section-title p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      transition: all 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-5);
+      font-size: 24px;
+    }
+
+    .feature-card:nth-child(1) .feature-icon {
+      background: #EFF6FF;
+      color: var(--accent);
+    }
+
+    .feature-card:nth-child(2) .feature-icon {
+      background: #ECFDF5;
+      color: var(--success);
+    }
+
+    .feature-card:nth-child(3) .feature-icon {
+      background: #FFF7ED;
+      color: var(--accent-warm);
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ========== 数据面板 ========== */
+    .data-section {
+      padding: 80px 0;
+      background: var(--primary);
+    }
+
+    .data-section .section-title h2,
+    .data-section .section-title p {
+      color: white;
+    }
+
+    .data-section .section-title p {
+      opacity: 0.7;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: var(--space-2);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ========== 薪资表格 ========== */
+    .salary-section {
+      padding: 80px 0;
+    }
+
+    .salary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .salary-header {
+      padding: var(--space-6);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .salary-header h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .salary-search {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .search-input {
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      width: 200px;
+    }
+
+    .salary-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .salary-table th {
+      text-align: left;
+      padding: var(--space-4) var(--space-6);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--border-light);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .salary-table td {
+      padding: var(--space-4) var(--space-6);
+      border-bottom: 1px solid var(--border-light);
+      font-size: 14px;
+    }
+
+    .salary-table tr:hover td {
+      background: var(--border-light);
+    }
+
+    .salary-table .company {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .salary-table .salary {
+      font-weight: 700;
+      color: var(--success);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .salary-table .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--border-light);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ========== 痛点列表 ========== */
+    .pain-section {
+      padding: 80px 0;
+    }
+
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+
+    .pain-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-5);
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: var(--radius-md);
+    }
+
+    .pain-emoji {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .pain-text {
+      font-size: 14px;
+      color: #991B1B;
+    }
+
+    /* ========== Footer ========== */
+    .footer {
+      background: var(--primary);
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-12);
+      margin-bottom: var(--space-10);
+    }
+
+    .footer-brand p {
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      margin-top: var(--space-4);
+      max-width: 300px;
+    }
+
+    .footer h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+      opacity: 0.6;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: var(--space-2);
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 768px) {
+      .features-grid,
+      .data-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .salary-search {
+        flex-direction: column;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 头部 -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <div class="logo-icon">W</div>
+        <span class="logo-text">WeJob</span>
+      </div>
+      <nav class="nav">
+        <div class="nav-item active">首页</div>
+        <div class="nav-item">简历优化</div>
+        <div class="nav-item">薪资行情</div>
+        <div class="nav-item">模拟面试</div>
+      </nav>
+      <div style="display: flex; gap: 12px;">
+        <button class="btn btn-secondary">登录</button>
+        <button class="btn btn-primary">免费试用</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span>✨</span>
+        <span>AI驱动的智能求职平台</span>
+      </div>
+      <h1 class="hero-title">
+        让求职更简单<br>
+        <span class="highlight">让机会不再错过</span>
+      </h1>
+      <p class="hero-subtitle">
+        WeJob整合AI简历优化、真实薪资数据、智能面试辅导，<br>
+        帮助每一位求职者找到心仪的工作。
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-primary">立即优化简历</button>
+        <button class="btn btn-secondary">查看薪资行情</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 功能 -->
+  <section class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>为什么选择 WeJob？</h2>
+        <p>我们用AI技术解决求职过程中的痛点，让每一份努力都有回报</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📄</div>
+          <h3>AI简历优化</h3>
+          <p>智能分析简历薄弱点，生成优化版本，提升面试邀请率</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💰</div>
+          <h3>薪资情报</h3>
+          <p>真实薪资数据，帮你了解市场行情，谈出理想薪资</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>模拟面试</h3>
+          <p>AI模拟真实面试，即时反馈薄弱点，自信应对面试</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数据 -->
+  <section class="data-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>数据说话</h2>
+        <p>真实用户反馈，持续优化的效果</p>
+      </div>
+      <div class="data-grid">
+        <div class="stat-card">
+          <div class="stat-value">50,000+</div>
+          <div class="stat-label">服务用户</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">95%</div>
+          <div class="stat-label">简历通过率提升</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">¥15,000</div>
+          <div class="stat-label">平均薪资涨幅</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">4.9/5</div>
+          <div class="stat-label">用户满意度</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 痛点 -->
+  <section class="pain-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>求职者面临的真实困境</h2>
+      </div>
+      <div class="pain-grid">
+        <div class="pain-item">
+          <span class="pain-emoji">📄</span>
+          <span class="pain-text">海投100份简历，回复寥寥无几</span>
+        </div>
+        <div class="pain-item">
+          <span class="pain-emoji">💸</span>
+          <span class="pain-text">不知道自己的市场价，面试时底气不足</span>
+        </div>
+        <div class="pain-item">
+          <span class="pain-emoji">🎯</span>
+          <span class="pain-text">不知道目标公司到底看重什么能力</span>
+        </div>
+        <div class="pain-item">
+          <span class="pain-emoji">😰</span>
+          <span class="pain-text">面试紧张，准备不充分频频失误</span>
+        </div>
+        <div class="pain-item">
+          <span class="pain-emoji">🤝</span>
+          <span class="pain-text">没有内推渠道，只能靠海投</span>
+        </div>
+        <div class="pain-item">
+          <span class="pain-emoji">📈</span>
+          <span class="pain-text">拿到offer不知道怎么谈判薪资</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 薪资表格 -->
+  <section class="salary-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>真实薪资数据</h2>
+        <p>基于数千条员工匿名薪资信息</p>
+      </div>
+      <div class="salary-card">
+        <div class="salary-header">
+          <h3>最新薪资行情</h3>
+          <div class="salary-search">
+            <input type="text" class="search-input" placeholder="搜索公司...">
+            <button class="btn btn-accent">查询</button>
+          </div>
+        </div>
+        <table class="salary-table">
+          <thead>
+            <tr>
+              <th>公司</th>
+              <th>岗位</th>
+              <th>城市</th>
+              <th>薪资范围</th>
+              <th>中位数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="company">字节跳动</td>
+              <td>前端工程师</td>
+              <td><span class="badge">北京</span></td>
+              <td>35K - 55K</td>
+              <td class="salary">45K/月</td>
+            </tr>
+            <tr>
+              <td class="company">腾讯</td>
+              <td>前端工程师</td>
+              <td><span class="badge">深圳</span></td>
+              <td>45K - 70K</td>
+              <td class="salary">55K/月</td>
+            </tr>
+            <tr>
+              <td class="company">阿里巴巴</td>
+              <td>后端工程师</td>
+              <td><span class="badge">杭州</span></td>
+              <td>38K - 60K</td>
+              <td class="salary">48K/月</td>
+            </tr>
+            <tr>
+              <td class="company">美团</td>
+              <td>算法工程师</td>
+              <td><span class="badge">北京</span></td>
+              <td>40K - 65K</td>
+              <td class="salary">52K/月</td>
+            </tr>
+            <tr>
+              <td class="company">百度</td>
+              <td>产品经理</td>
+              <td><span class="badge">北京</span></td>
+              <td>25K - 40K</td>
+              <td class="salary">32K/月</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-icon">W</div>
+            <span class="logo-text">WeJob</span>
+          </div>
+          <p>WeJob 致力于用AI技术帮助每一位求职者找到理想工作。让求职更简单。</p>
+        </div>
+        <div>
+          <h4>产品功能</h4>
+          <ul class="footer-links">
+            <li><a href="#">简历优化</a></li>
+            <li><a href="#">薪资情报</a></li>
+            <li><a href="#">模拟面试</a></li>
+            <li><a href="#">Offer谈判</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>求职资源</h4>
+          <ul class="footer-links">
+            <li><a href="#">求职攻略</a></li>
+            <li><a href="#">面试题库</a></li>
+            <li><a href="#">简历模板</a></li>
+            <li><a href="#">行业报告</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 WeJob. All rights reserved.</span>
+        <span>Made with ❤️ for job seekers</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
